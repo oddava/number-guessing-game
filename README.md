@@ -7,7 +7,7 @@
 - [Usage](#usage)
 
 ## Introduction
-Welcome to the Number Guessing Game project! In this game you have to guess the number which is selected by computer between 1 and 100. It allows users to freely check their luck
+Welcome to the Number Guessing Game project! In this game, you have to guess the number between 1 and 100 which is selected by computer.
 
 ## Features
 - Simple and modern UI.

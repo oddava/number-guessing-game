@@ -68,6 +68,7 @@ submitBtn.addEventListener("click", () => {
     previous_guesses.push(Number(userGuess.value));
     numberOfGuessesLeft -= 1;
     guessField.style.display = "block";
+    statusField.style.display = "block";
     introField.style.display = "none";
 
     // Defining the contents of the texts in specific cases
@@ -88,7 +89,7 @@ submitBtn.addEventListener("click", () => {
             "status text": `${numberOfGuessesLeft} tries left.`
         },
         high: {
-            "result text": "Yout guess was too high",
+            "result text": "Your guess was too high",
             "info text": `Previous guesses: ${previous_guesses}`,
             "status text": `${numberOfGuessesLeft} tries left.`
         }

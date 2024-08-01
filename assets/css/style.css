@@ -357,11 +357,6 @@ h2.subtitle span:last-child {
     :root {
       --main-font-size: 8px;
     }
-  }
-  @media only screen and (max-width: 600px) {
-    :root {
-      --main-font-size: 7px;
-    }
     body {
       overflow-y: hidden;
     }

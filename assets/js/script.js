@@ -132,6 +132,7 @@ submitBtn.addEventListener("click", () => {
     resultField.innerHTML = resultText;
     infoField.innerHTML = infoText;
     statusField.innerHTML = statusText;
+    userGuess.focus();
     userGuess.value = "";
 })
 

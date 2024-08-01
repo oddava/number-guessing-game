@@ -11,6 +11,7 @@ Welcome to the Number Guessing Game project! In this game, you have to guess the
 
 ## Features
 - Simple and modern UI.
+- Multiple languages selection.
 - Displays player's previous guesses.
 - Interesting interactive background.
 - Restart functionality to reset the game.

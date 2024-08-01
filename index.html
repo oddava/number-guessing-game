@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guessing game</title>
+    <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body>
+    <svg 
+        viewBox="0 0 100% 100%"
+        xmlns='http://www.w3.org/2000/svg'
+        class="noise">
+        <filter id='noiseFilter'>
+            <feTurbulence 
+                type='fractalNoise' 
+                baseFrequency='0.85' 
+                numOctaves='6' 
+                stitchTiles='stitch' />
+        </filter>
+
+            <rect
+                width='100%'
+                height='100%'
+                preserveAspectRatio="xMidYMid meet"
+                filter='url(#noiseFilter)' />
+    </svg>
+    <div class="content">
+        <div class="introduction">
+          <h1 class="title">Number guessing game</h1>
+        <hr>
+        <h2 class="subtitle">We have selected a random number between <span>1</span> and <span>100</span>. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</h2>
+        </div>
+        <form id="input-container">
+            <label for="user-guess">Enter your guess: </label>
+            <div class="inputs">
+                <input type="number" id="user-guess" min="0" max="100">
+                <input type="button" id="submit" value="submit">
+            </div>
+        </form>
+        <div class="guess-field">
+          <h2 class="result"></h2>
+          <p id="info-text"></p>
+          <p id="status-text"></p>
+        </div>
+        <div class="play-again">
+          <button>Play Again?</button>
+        </div>
+    </div>
+    <div class="gradient-bg">
+        <svg 
+        viewBox="0 0 100vw 100vw"
+        xmlns='http://www.w3.org/2000/svg'
+        class="noiseBg"
+             >
+          <filter id='noiseFilterBg'>
+              <feTurbulence 
+                type='fractalNoise'
+                baseFrequency='0.6'
+                stitchTiles='stitch' />
+            </filter>
+      
+          <rect
+            width='100%'
+            height='100%'
+            preserveAspectRatio="xMidYMid meet"
+            filter='url(#noiseFilterBg)' />
+        </svg>
+        <svg xmlns="http://www.w3.org/2000/svg" class="svgBlur">
+            <defs>
+                <filter id="goo">
+              <feGaussianBlur in="SourceGraphic" stdDeviation="10" result="blur" />
+              <feColorMatrix in="blur" mode="matrix" values="1 0 0 0 0  0 1 0 0 0  0 0 1 0 0  0 0 0 18 -8" result="goo" />
+              <feBlend in="SourceGraphic" in2="goo" />
+            </filter>
+          </defs>
+        </svg>
+        <div class="gradients-container">
+          <div class="g1"></div>
+          <div class="g2"></div>
+          <div class="g3"></div>
+          <div class="g4"></div>
+          <div class="g5"></div>
+          <div class="interactive"></div>
+        </div>
+      </div>
+<script src="assets/js/script.js"></script>
+</body>
+</html>

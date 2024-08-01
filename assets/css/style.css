@@ -96,6 +96,42 @@ h2.subtitle span:last-child {
     color: var(--secondary-color);
 }
 
+.language-selector {
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+  padding: 10px 15px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #fff;
+  background: rgba(255, 255, 255, .2);
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+  position: relative;
+}
+
+.language-selector:hover {
+  background: rgba(0,0,0,0.1); /* Darker blue on hover */
+}
+
+.language-selector option {
+  background-color: #fff;
+  color: #000;
+}
+
+.language-selector:focus {
+  box-shadow: 0 0 5px rgba(0, 123, 255, 0.5);
+}
+
+.language-selector::-ms-expand {
+  display: none;
+}
+
+
+
 #input-container {
     margin-top: 25px;
     display: flex;

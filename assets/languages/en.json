@@ -1,0 +1,12 @@
+{
+    "title": "Number guessing game",
+    "subtitle": "We have selected a random number between <span>1</span> and <span>100</span>. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.",
+    "input-label": "Enter your guess:",
+    "game_over_result": "Limit exceeded, game over!<br><span>The number was {number}</span>",
+    "game_over_info": "Previous guesses: {previous_guesses}",
+    "game_over_status": "{tries_left} tries left.",
+    "correct_result": "Correct! You guessed right!!",
+    "low_result": "Your guess was too low!",
+    "high_result": "Your guess was too high",
+    "play-again": "Play Again?"
+  }

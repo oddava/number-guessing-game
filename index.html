@@ -25,11 +25,17 @@
                 preserveAspectRatio="xMidYMid meet"
                 filter='url(#noiseFilter)' />
     </svg>
+
+
     <div class="content">
+      <select class="language-selector">
+        <option value="en">English</option>
+        <option value="ru">Russian</option>
+      </select>
         <div class="introduction">
-          <h1 class="title">Number guessing game</h1>
+          <h1 class="title" data-translate="title">Number guessing game</h1>
         <hr>
-        <h2 class="subtitle">We have selected a random number between <span>1</span> and <span>100</span>. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</h2>
+        <h2 class="subtitle" data-translate="subtitle">We have selected a random number between <span>1</span> and <span>100</span>. See if you can guess it in 10 turns or fewer. We'll tell you if your guess was too high or too low.</h2>
         </div>
         <div class="guess-field">
           <h2 class="result"></h2>
@@ -37,16 +43,18 @@
           <p id="status-text"></p>
         </div>
         <form id="input-container">
-            <label for="user-guess">Enter your guess: </label>
+            <label for="user-guess" data-translate="input-label">Enter your guess: </label>
             <div class="inputs">
                 <input type="number" id="user-guess" min="0" max="100">
                 <input type="button" id="submit" value="submit">
             </div>
         </form>
         <div class="play-again">
-          <button>Play Again?</button>
+          <button><span data-translate="play-again">Play Again?</span></button>
         </div>
     </div>
+
+
     <div class="gradient-bg">
         <svg 
         viewBox="0 0 100vw 100vw"

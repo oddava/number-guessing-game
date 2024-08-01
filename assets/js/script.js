@@ -1,4 +1,101 @@
 document.addEventListener('DOMContentLoaded', () => {
+    const languageSelector = document.querySelector('.language-selector');
+    const content = document.querySelector('.content');
+
+    let translations = {};
+
+    // Load default language
+    loadLanguage('en');
+
+    // Add event listener for language change
+    languageSelector.addEventListener('change', (e) => {
+        loadLanguage(e.target.value);
+    });
+
+    function loadLanguage(lang) {
+        fetch(`assets/languages/${lang}.json`)
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error(`Failed to load ${lang}.json: ${response.statusText}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                translations = data;
+                applyTranslations(data);
+            })
+            .catch(error => console.error('Error loading language file:', error));
+    }
+
+    function applyTranslations(translations) {
+        const elements = content.querySelectorAll('[data-translate]');
+        elements.forEach(element => {
+            const key = element.getAttribute('data-translate');
+            element.innerHTML = translations[key] || key;
+        });
+    }
+
+    function translate(key, params = {}) {
+        let translation = translations[key] || key;
+        for (const [param, value] of Object.entries(params)) {
+            translation = translation.replace(`{${param}}`, value);
+        }
+        return translation;
+    }
+
+
+    submitBtn.addEventListener("click", () => {
+        const guessInfo = checkGuess(userGuess.value, computerGuess);
+        previous_guesses.push(Number(userGuess.value));
+        numberOfGuessesLeft -= 1;
+        guessField.style.display = "block";
+        statusField.style.display = "block";
+        introField.style.display = "none";
+    
+        let resultText, infoText, statusText;
+    
+        if (isGameOver(numberOfGuessesLeft)) {
+            resultText = translate('game_over_result', { number: computerGuess });
+            infoText = translate('game_over_info', { previous_guesses: previous_guesses.join(', ') });
+            statusText = translate('game_over_status', { tries_left: numberOfGuessesLeft });
+    
+            inputField.style.display = "none";
+            playAgainBtn.style.display = "block";
+        } else {
+            switch (guessInfo) {
+                case "low":
+                    resultText = translate('low_result');
+                    infoText = translate('game_over_info', { previous_guesses: previous_guesses.join(', ') });
+                    statusText = translate('game_over_status', { tries_left: numberOfGuessesLeft });
+                    break;
+                case "high":
+                    resultText = translate('high_result');
+                    infoText = translate('game_over_info', { previous_guesses: previous_guesses.join(', ') });
+                    statusText = translate('game_over_status', { tries_left: numberOfGuessesLeft });
+                    break;
+                default:
+                    resultText = translate('correct_result');
+                    infoText = translate('game_over_info', { previous_guesses: previous_guesses.join(', ') });
+                    statusField.style.display = "none";
+                    inputField.style.display = "none";
+                    introField.style.display = "none";
+                    playAgainBtn.style.display = "block";
+                    break;
+            }
+        }
+    
+        resultField.innerHTML = resultText;
+        infoField.innerHTML = infoText;
+        statusField.innerHTML = statusText;
+        userGuess.focus();
+        userGuess.value = "";
+    });
+    
+    playAgainBtn.addEventListener("click", () => {
+        resetGame();
+    });
+    
+
     const interBubble = document.querySelector('.interactive');
     let curX = 0;
     let curY = 0;
@@ -20,27 +117,24 @@ document.addEventListener('DOMContentLoaded', () => {
     move();
 });
 
-
-// Assigning the DOM elements
 const userGuess = document.getElementById("user-guess");
 const submitBtn = document.getElementById("submit");
 const playAgainBtn = document.querySelector(".play-again");
 
 const resultField = document.querySelector(".result"),
-guessField = document.querySelector(".guess-field"),
-infoField = document.querySelector("#info-text"),
-statusField = document.querySelector("#status-text"),
-introField = document.querySelector(".introduction"),
-inputField = document.querySelector("#input-container");
+    guessField = document.querySelector(".guess-field"),
+    infoField = document.querySelector("#info-text"),
+    statusField = document.querySelector("#status-text"),
+    introField = document.querySelector(".introduction"),
+    inputField = document.querySelector("#input-container");
 
-let computerGuess = Math.floor(Math.random() * 100)+1;
+let computerGuess = Math.floor(Math.random() * 100) + 1;
 let previous_guesses = [];
 let numberOfGuessesLeft = 10;
 
-// Checks the user guess and returns wether it's correct or not
-function checkGuess(num, cumputerguess) {
+function checkGuess(num, computerGuess) {
     num = Number(num);
-    let status = num === cumputerguess ? true : false;
+    let status = num === computerGuess ? true : false;
     if (!status) status = num < computerGuess ? "low" : "high";
     return status;
 }
@@ -61,81 +155,3 @@ function resetGame() {
     playAgainBtn.style.display = "none";
     userGuess.value = "";
 }
-
-submitBtn.addEventListener("click", () => {
-    // retrieving the guess status (true, low, high)
-    const guessInfo = checkGuess(userGuess.value, computerGuess);
-    previous_guesses.push(Number(userGuess.value));
-    numberOfGuessesLeft -= 1;
-    guessField.style.display = "block";
-    statusField.style.display = "block";
-    introField.style.display = "none";
-
-    // Defining the contents of the texts in specific cases
-    let contents = {
-        game_over: {
-            "result text": `Limit exceed, game over!<br><span>The number was ${computerGuess}</span>`,
-            "info text": `Previous guesses: ${previous_guesses}`,
-            "status text": `${numberOfGuessesLeft} tries left.`
-        },
-        true: {
-            "result text": "Correct! You guessed right!!",
-            "info text": `Previous guesses: ${previous_guesses}`,
-            "status text": ``
-        },
-        low: {
-            "result text": "Your guess was too low!",
-            "info text": `Previous guesses: ${previous_guesses}`,
-            "status text": `${numberOfGuessesLeft} tries left.`
-        },
-        high: {
-            "result text": "Your guess was too high",
-            "info text": `Previous guesses: ${previous_guesses}`,
-            "status text": `${numberOfGuessesLeft} tries left.`
-        }
-    }
-    let resultText;
-    let infoText;
-    let statusText;
-    
-    if (isGameOver(numberOfGuessesLeft)){
-        resultText  = contents.game_over['result text'];
-        infoText  = contents.game_over['info text'];
-        statusText  = contents.game_over['status text'];
-
-        inputField.style.display = "none";
-        playAgainBtn.style.display = "block";
-    } else {
-        switch (guessInfo) {
-            case "low":
-                resultText  = contents.low['result text'];
-                infoText  = contents.low['info text'];
-                statusText  = contents.low['status text'];
-                break;
-            case "high":
-                resultText = contents.high['result text'];
-                infoText = contents.high['info text'];
-                statusText = contents.high['status text'];
-                break
-        
-            default:
-                resultText = contents.true['result text'];
-                infoText = contents.true['info text'];
-                statusField.style.display = "none";
-                inputField.style.display = "none";
-                introField.style.display = "none";
-
-                playAgainBtn.style.display = "block";
-                break;
-        }
-    }
-    resultField.innerHTML = resultText;
-    infoField.innerHTML = infoText;
-    statusField.innerHTML = statusText;
-    userGuess.focus();
-    userGuess.value = "";
-})
-
-playAgainBtn.addEventListener("click", () => {
-    resetGame();
-})

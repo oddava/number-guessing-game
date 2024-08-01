@@ -362,4 +362,7 @@ h2.subtitle span:last-child {
     :root {
       --main-font-size: 7px;
     }
+    body {
+      overflow-y: hidden;
+    }
   }

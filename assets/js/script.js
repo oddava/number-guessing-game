@@ -149,6 +149,7 @@ function isGameOver(remainingGuessesCount) {
 function resetGame() {
     previous_guesses = [];
     numberOfGuessesLeft = 10;
+    computerGuess = Math.floor(Math.random() * 100) + 1;
     introField.style.display = "block";
     inputField.style.display = "flex";
     guessField.style.display = "none";
